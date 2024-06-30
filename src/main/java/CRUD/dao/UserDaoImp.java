@@ -9,6 +9,7 @@ import jakarta.persistence.PersistenceContext;
 
 
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class UserDaoImp implements UserDao {
@@ -33,9 +34,14 @@ public class UserDaoImp implements UserDao {
         entityManager.remove(entityManager.find(User.class, id));
     }
 
+
     @Override
-    public void updateUser(User user) {
-    entityManager.merge(user);
+    public void updateUser(User user, int id) {
+        User newUser = entityManager.find(User.class, id);
+        newUser.setName(user.getName());
+        newUser.setSurname(user.getSurname());
+        newUser.setEmail(user.getEmail());
+        entityManager.merge(newUser);
     }
 
     @Override

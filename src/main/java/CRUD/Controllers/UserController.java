@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 
 
 
+
 @Controller
 @RequestMapping
 public class UserController {
@@ -50,11 +51,11 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
+    public String updateUser(@RequestParam("id")int id,@ModelAttribute("user") @Valid User user, BindingResult result) {
         if (result.hasErrors()) {
             return "edit";
         }
-        userService.updateUser(user);
+        userService.updateUser(user, user.getId());
         return "redirect:/user";
     }
 
